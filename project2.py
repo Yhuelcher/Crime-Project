@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 
 import pandas as pd
 
-pd.read_table('ecrime.csv')
-ecrimes = pd.read_table('ecrime.csv', sep=',')
+pd.read_table('ecrimes.csv')
+ecrimes = pd.read_table('ecrimes.csv', sep=',')
 
 
 ecrimes.drop(['datex', 'Datxe'], axis=1, inplace=True)
@@ -77,7 +77,7 @@ from sklearn.cross_validation import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=4)
 
-# check classification accuracy of KNN with K=5
+
 knn = KNeighborsClassifier(n_neighbors=20)
 knn.fit(X_train, y_train)
 y_pred = knn.predict(X_test)
@@ -108,7 +108,7 @@ knn.fit(X_train, y_train)
 y_pred = knn.predict(X_test)
 print metrics.accuracy_score(y_test, y_pred) 
 
-ecrimes.boxplot(column='Fahrenheit', by='OFFENSE')
+ecrimes.boxplot(column='Fahrenheit', by='Coffense')
 
 pd.scatter_matrix(ecrimes[['OFFENSE', 'cshift']])
 plt.xlabel('SHIFT')
@@ -116,4 +116,13 @@ plt.ylabel('OFFENSES')
 
 
 
- 
+y_pred_prob1 = logreg.predict_proba(X_test)[:, 1]
+y_pred_prob1[:10] 
+
+%matplotlib inline
+import matplotlib.pyplot as plt
+plt.hist(y_pred_prob1)
+
+import numpy as np
+y_pred_prob2 = np.sqrt(y_pred_prob1)
+y_pred_prob2[:10]
